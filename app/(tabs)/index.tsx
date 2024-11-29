@@ -1,9 +1,9 @@
-import { Image, StyleSheet, Platform, View, Text } from "react-native";
+import { Image, StyleSheet, View, Text, Button, Alert } from "react-native";
 
-import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Divider, useTheme } from "@rneui/themed";
 
 export default function HomeScreen() {
   const mockData = [
@@ -28,6 +28,9 @@ export default function HomeScreen() {
     { date: "19/10/24", amount: "10.95", description: "Latte", type: "CREDIT" },
     { date: "20/10/24", amount: "10.95", description: "Latte", type: "CREDIT" },
   ];
+
+  const { theme } = useTheme();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -42,32 +45,25 @@ export default function HomeScreen() {
         <ThemedText type="subtitle">Recent Transactions</ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-around",
-          }}
-        >
-          <Text>Date</Text>
-          <Text>Description</Text>
-          <Text>Amount</Text>
-          <Text>Type</Text>
-        </View>
         <View>
           {mockData.map((d, i) => {
             return (
-              <View
-                style={{
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  justifyContent: "space-around",
-                }}
-              >
-                <Text key={i}>{d.date}</Text>
-                <Text key={i}>{d.description}</Text>
-                <Text key={i}>{d.amount}</Text>
-                <Text key={i}>{d.type}</Text>
+              <View key={`{${i}-${d.date}}`}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text>{d.date}</Text>
+                  <Text>{d.description}</Text>
+                  <Text>{d.amount}</Text>
+                  <Text>{d.type}</Text>
+                  <Button title="More" onPress={() => Alert.alert("More")} />
+                </View>
+                <Divider width={2} color={theme?.colors?.divider} />
               </View>
             );
           })}
