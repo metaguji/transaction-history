@@ -6,15 +6,17 @@ An application that shows transaction history.
 
 Follow the steps below sequentially to initialise application:
 
-1. Start api service
+#### 1. Start api service
+
+In a terminal, run the following command:
 
 ```
 make api-service
 ```
 
-<br/>
+#### 2. Start ios client
 
-2. Start ios client
+In a separate terminal, run:
 
 ```
 make start-ios-client
