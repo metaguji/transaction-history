@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 import NotFoundScreen from "../+not-found";
 
 export default function DetailScreen() {

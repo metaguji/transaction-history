@@ -4,14 +4,16 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+// import { Stack } from "expo-router";
+import { Stack } from "expo-router/stack";
+
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { AuthContext } from "./AuthProvider";
+import { AuthContext } from "../contexts/AuthProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -37,11 +39,26 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
-        <Stack>
+        {/* <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
+        </Stack> */}
+        {/* <Stack /> */}
+        <Stack
+          screenOptions={{
+            headerStyle: {
+              // backgroundColor: "#f4511e",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        >
+          <Stack.Screen name="home" options={{}} />
         </Stack>
-        <StatusBar style="auto" />
+
+        {/* <StatusBar style="auto" /> */}
       </AuthContext.Provider>
     </ThemeProvider>
   );

@@ -14,7 +14,7 @@ import { Divider, useTheme } from "@rneui/themed";
 // @ts-expect-error: TODO - Fix me
 import { Link } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 import NotFoundScreen from "../+not-found";
 
 // const mockData = [

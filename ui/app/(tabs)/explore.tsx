@@ -7,7 +7,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useContext } from "react";
-import { AuthContext } from "../AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 import NotFoundScreen from "../+not-found";
 

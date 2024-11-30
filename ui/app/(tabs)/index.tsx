@@ -7,7 +7,7 @@ import { router } from "expo-router";
 
 import * as LocalAuthentication from "expo-local-authentication";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 export default function AuthenticationScreen(props: any) {
   const [hasBiometricsSupport, setHasBiometricsSupoort] = useState(false);
