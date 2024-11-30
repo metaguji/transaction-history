@@ -1,19 +1,21 @@
-## Description
+## About
 
-A transaction history module written in react-native.
+An application that shows transaction history.
 
 ### Setup instructions
 
-- Install dependencies
+Follow the steps below sequentially to initialise application:
+
+1. Start api service
 
 ```
-npm install
+make api-service
 ```
 
 <br/>
 
-- Run the following command & select preferred development build
+2. Start ios client
 
 ```
-npm run start
+make start-ios-client
 ```
