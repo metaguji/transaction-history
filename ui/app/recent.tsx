@@ -9,14 +9,13 @@ import {
 } from "react-native";
 
 import { Divider, useTheme } from "@rneui/themed";
-// @ts-expect-error: TODO - Fix me
 import { Link, router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
-import NotFoundScreen from "./+not-found";
+import NotFoundScreen from "./not-found";
 import Animated from "react-native-reanimated";
 
-export default function RecentTransactions() {
+export default function RecentTransactionsScreen() {
   const { theme } = useTheme();
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,62 +52,69 @@ export default function RecentTransactions() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Animated.View
-        style={[
-          styles.header,
-          {
-            padding: 32,
-            backgroundColor: { light: "#A1CEDC", dark: "#1D3D47" }[colorScheme],
-          },
-          //   headerAnimatedStyle,
-        ]}
-      >
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-        <View style={styles.button}>
-          <Button title="Log out" onPress={onLogoutHandler} />
-        </View>
-      </Animated.View>
-      <View style={{ flex: 1, padding: 10, gap: 16, overflow: "hidden" }}>
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-          Recent Transactions
-        </Text>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          data.map((d, i) => {
-            return (
-              <View key={`{${i}-${d.date}}`}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text>{d.date}</Text>
-                  <Text>{d.description}</Text>
-                  <Text>{d.amount}</Text>
-                  <Text>{d.type}</Text>
-                  <Link
-                    href={{
-                      pathname: "/detail",
-                      params: { id: d.id },
+      <Animated.ScrollView>
+        <Animated.View
+          style={[
+            styles.header,
+            {
+              padding: 40,
+              backgroundColor: { light: "#A1CEDC", dark: "#1D3D47" }[
+                colorScheme
+              ],
+            },
+          ]}
+        >
+          <Image
+            source={require("@/assets/images/partial-react-logo.png")}
+            style={styles.reactLogo}
+          />
+          <View style={styles.button}>
+            <Button title="Log out" onPress={onLogoutHandler} />
+          </View>
+        </Animated.View>
+        <View style={{ flex: 1, padding: 20, overflow: "hidden" }}>
+          <View
+            style={{ flexDirection: "row", alignItems: "center", padding: 5 }}
+          >
+            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              Recent Transactions
+            </Text>
+          </View>
+          {isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            data.map((d, i) => {
+              return (
+                <View key={`{${i}-${d.date}}`}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      justifyContent: "space-around",
+                      alignItems: "center",
                     }}
-                    asChild
                   >
-                    <Button title="More" />
-                  </Link>
+                    <Text>{d.date}</Text>
+                    <Text>{d.description}</Text>
+                    <Text>{d.amount}</Text>
+                    <Text>{d.type}</Text>
+                    <Link
+                      href={{
+                        pathname: "/detail",
+                        params: { id: d.id },
+                      }}
+                      asChild
+                    >
+                      <Button title="More" />
+                    </Link>
+                  </View>
+                  <Divider width={2} color={theme?.colors?.divider} />
                 </View>
-                <Divider width={2} color={theme?.colors?.divider} />
-              </View>
-            );
-          })
-        )}
-      </View>
+              );
+            })
+          )}
+        </View>
+      </Animated.ScrollView>
     </View>
   );
 }

@@ -19,14 +19,14 @@ export default function AuthenticationScreen() {
     checkiFBioMetricsSupported();
   }, []);
 
-  const onAuthenticateHandler = async () => {
+  const onAuthenticatedHandler = async () => {
     const authenticatedResponse = await LocalAuthentication.authenticateAsync({
       fallbackLabel: "Failed to login",
     });
 
     if (authenticatedResponse.success) {
       setIsAuthenticated(true);
-      router.replace("recent");
+      router.replace("/recent");
     } else {
       Alert.alert("Authentication failed");
     }
@@ -40,7 +40,7 @@ export default function AuthenticationScreen() {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View style={styles.button}>
         {hasBiometricsSupport ? (
-          <Button title="Login" onPress={onAuthenticateHandler} />
+          <Button title="Login" onPress={onAuthenticatedHandler} />
         ) : (
           <Text>
             Biometrics authentication not supported on current device.
