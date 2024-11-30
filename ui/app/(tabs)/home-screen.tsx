@@ -182,7 +182,6 @@ export default function HomeScreen() {
 
   useEffect(() => {
     setIsLoading(true);
-
     getRecentTransactionData();
   }, []);
 
