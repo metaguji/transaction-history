@@ -1,5 +1,5 @@
 import { Link, Stack, useLocalSearchParams } from "expo-router";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -7,8 +7,6 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 
 export default function NotFoundScreen() {
   const { id } = useLocalSearchParams();
-
-  console.log({ id });
 
   return (
     <ParallaxScrollView
@@ -26,8 +24,9 @@ export default function NotFoundScreen() {
       </ThemedView>
       <ThemedView style={styles.container}>
         <ThemedText type="title">Transaction #{id}</ThemedText>
-        <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
+        {/* TODO: Add detailed transaction */}
+        <Link href="/home-screen" style={styles.link}>
+          <ThemedText type="link">Back</ThemedText>
         </Link>
       </ThemedView>
     </ParallaxScrollView>
