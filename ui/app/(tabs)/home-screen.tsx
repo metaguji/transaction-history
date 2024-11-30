@@ -168,7 +168,9 @@ export default function HomeScreen() {
 
   const getRecentTransactionData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/transactions/recent");
+      const response = await fetch(
+        "http://localhost:8080/api/transactions/recent"
+      );
       const json = await response.json();
       setData(json);
     } catch (error) {

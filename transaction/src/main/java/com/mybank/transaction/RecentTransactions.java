@@ -11,7 +11,7 @@ public class RecentTransactions {
 
     List<TransactionItem> recentTransactions = new ArrayList<>();
 
-    @GetMapping("/transactions/recent")
+    @GetMapping("/api/transactions/recent")
     public List<TransactionItem> recentTransactions() {
 
         recentTransactions.add(new TransactionItem("1", "01/11/2023", "10", "Latte", "CREDIT"));
