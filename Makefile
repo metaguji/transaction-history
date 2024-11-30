@@ -5,6 +5,5 @@ api-service:
 
 start-ios-client:
 	cd ./ui && \
-	npm install \
-	npm run ios && \
-	i
+	npm install && \
+	npm run ios
