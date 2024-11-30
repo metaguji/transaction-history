@@ -13,7 +13,9 @@ import { ThemedView } from "@/components/ThemedView";
 import { Divider, useTheme } from "@rneui/themed";
 // @ts-expect-error: TODO - Fix me
 import { Link } from "expo-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../AuthProvider";
+import NotFoundScreen from "../+not-found";
 
 // const mockData = [
 //   {
@@ -162,6 +164,7 @@ export default function HomeScreen() {
   const { theme } = useTheme();
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { isAuthenticated } = useContext(AuthContext);
 
   const getRecentTransactionData = async () => {
     try {
@@ -181,7 +184,7 @@ export default function HomeScreen() {
     getRecentTransactionData();
   }, []);
 
-  return (
+  return isAuthenticated ? (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
@@ -232,6 +235,8 @@ export default function HomeScreen() {
         </View>
       </ThemedView>
     </ParallaxScrollView>
+  ) : (
+    <NotFoundScreen />
   );
 }
 

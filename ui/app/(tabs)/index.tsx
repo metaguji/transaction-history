@@ -1,12 +1,40 @@
-import { Image, StyleSheet, View, Text, Pressable } from "react-native";
+import { Image, StyleSheet, View, Text, Button, Alert } from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedView } from "@/components/ThemedView";
-import { useTheme } from "@rneui/themed";
-import { Link } from "expo-router";
+// @ts-expect-error: TODO - Fix me
+import { router } from "expo-router";
 
-export default function AuthenticationScreen() {
-  const { theme } = useTheme();
+import * as LocalAuthentication from "expo-local-authentication";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../AuthProvider";
+
+export default function AuthenticationScreen(props: any) {
+  const [hasBiometricsSupport, setHasBiometricsSupoort] = useState(false);
+  const { setIsAuthenticated } = useContext(AuthContext);
+
+  useEffect(() => {
+    const checkiFBioMetricsSupported = async () => {
+      const isBiometricsSupported =
+        await LocalAuthentication.hasHardwareAsync();
+      setHasBiometricsSupoort(isBiometricsSupported);
+    };
+
+    checkiFBioMetricsSupported();
+  }, []);
+
+  const onAuthenticateHandler = async () => {
+    const authenticatedResponse = await LocalAuthentication.authenticateAsync({
+      fallbackLabel: "Failed to login",
+    });
+
+    if (authenticatedResponse.success) {
+      setIsAuthenticated(true);
+      router.replace("/home-screen");
+    } else {
+      Alert.alert("Authentication failed");
+    }
+  };
 
   return (
     <ParallaxScrollView
@@ -22,11 +50,16 @@ export default function AuthenticationScreen() {
       <ThemedView style={styles.stepContainer}>
         <View style={styles.button}>
           {/* TODO: Add biometrics authentication */}
-          <Link href="/home-screen" asChild>
-            <Pressable>
-              <Text>Login</Text>
-            </Pressable>
-          </Link>
+          {/* <Link href="/home-screen" asChild> */}
+
+          {hasBiometricsSupport ? (
+            <Button title="Login" onPress={onAuthenticateHandler} />
+          ) : (
+            <Text>
+              Biometrics authentication not supported on current device.
+            </Text>
+          )}
+          {/* </Link> */}
         </View>
       </ThemedView>
     </ParallaxScrollView>

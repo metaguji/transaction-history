@@ -4,11 +4,15 @@ import { Image, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { useContext } from "react";
+import { AuthContext } from "../AuthProvider";
+import NotFoundScreen from "../+not-found";
 
-export default function NotFoundScreen() {
+export default function DetailScreen() {
+  const { isAuthenticated } = useContext(AuthContext);
   const { id } = useLocalSearchParams();
 
-  return (
+  return isAuthenticated ? (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
@@ -30,6 +34,8 @@ export default function NotFoundScreen() {
         </Link>
       </ThemedView>
     </ParallaxScrollView>
+  ) : (
+    <NotFoundScreen />
   );
 }
 
