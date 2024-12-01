@@ -78,7 +78,7 @@ export default function DetailTransactionScreen() {
       </Animated.View>
       <View style={{ flex: 1, padding: 20, overflow: "hidden" }}>
         <DetailTransaction
-          id={(typeof Array.isArray(id) ? id[0] : id) as string}
+          id={Array.isArray(id) ? id[0] : id}
           isLoading={isLoading}
           detailTransactionItem={detailTransactionItem}
         />
