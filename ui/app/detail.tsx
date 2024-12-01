@@ -1,20 +1,13 @@
-import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  ActivityIndicator,
-  useColorScheme,
-} from "react-native";
+import { Image, StyleSheet, View, Button, useColorScheme } from "react-native";
 
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import NotFoundScreen from "./not-found";
 import Animated from "react-native-reanimated";
+import { DetailTransaction } from "@/components/DetailTransaction";
 
-interface DetailTransactionItem {
+export interface DetailTransactionItem {
   date: string;
   amount: string;
   description: string;
@@ -76,46 +69,25 @@ export default function DetailTransactionScreen() {
           source={require("@/assets/images/partial-react-logo.png")}
           style={styles.reactLogo}
         />
-        <View style={styles.button2}>
+        <View style={[styles.button, styles.backButtonPosition]}>
           <Button title="Back" onPress={() => router.replace("/recent")} />
         </View>
-        <View style={styles.button}>
+        <View style={[styles.button, styles.logoutButtonPosition]}>
           <Button title="Log out" onPress={onLogoutHandler} />
         </View>
       </Animated.View>
       <View style={{ flex: 1, padding: 20, overflow: "hidden" }}>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <View style={styles.container}>
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-              Transaction Id: {id}
-            </Text>
-            <View style={styles.content}>
-              <Text>Date: {detailTransactionItem?.date}</Text>
-              <Text>Amount: {detailTransactionItem?.amount}</Text>
-              <Text>Description: {detailTransactionItem?.description}</Text>
-              <Text>Type: {detailTransactionItem?.type}</Text>
-              <Text>Merchant name: {detailTransactionItem?.merchantName}</Text>
-              <Text>Category: {detailTransactionItem?.category}</Text>
-            </View>
-          </View>
-        )}
+        <DetailTransaction
+          id={(typeof Array.isArray(id) ? id[0] : id) as string}
+          isLoading={isLoading}
+          detailTransactionItem={detailTransactionItem}
+        />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
   reactLogo: {
     height: 178,
     width: 290,
@@ -127,35 +99,22 @@ const styles = StyleSheet.create({
     height: 250,
     overflow: "hidden",
   },
-  button2: {
+  button: {
+    backgroundColor: "#DDDDDD",
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    borderRadius: "10%",
+  },
+  backButtonPosition: {
     position: "absolute",
     top: 5,
     left: 0,
     margin: 25,
-    backgroundColor: "#DDDDDD",
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: "10%",
   },
-  button: {
+  logoutButtonPosition: {
     position: "absolute",
     top: 5,
     right: 0,
     margin: 25,
-    alignItems: "center",
-    backgroundColor: "#DDDDDD",
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: "10%",
-  },
-  container: {
-    flex: 1,
-    padding: 25,
-    backgroundColor: "#DDDDDD",
-    borderRadius: "3%",
-  },
-  content: {
-    paddingVertical: 15,
-    gap: 5,
   },
 });
