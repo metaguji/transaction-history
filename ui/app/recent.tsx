@@ -4,20 +4,28 @@ import {
   View,
   Text,
   Button,
-  ActivityIndicator,
   useColorScheme,
 } from "react-native";
 
-import { Divider, useTheme } from "@rneui/themed";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import NotFoundScreen from "./not-found";
 import Animated from "react-native-reanimated";
+import { RecentTransactionsList } from "@/components/RecentTransactionsList";
+
+export interface RecentTransactionItem {
+  id: string;
+  date: string;
+  amount: string;
+  description: string;
+  type: string;
+}
 
 export default function RecentTransactionsScreen() {
-  const { theme } = useTheme();
-  const [data, setData] = useState<any[]>([]);
+  const [recentTransactions, setRecentTransactions] = useState<
+    RecentTransactionItem[]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
@@ -26,8 +34,8 @@ export default function RecentTransactionsScreen() {
       const response = await fetch(
         "http://localhost:8080/api/transactions/recent"
       );
-      const json = await response.json();
-      setData(json);
+      const jsonData = await response.json();
+      setRecentTransactions(jsonData);
     } catch (error) {
       console.error(error);
     } finally {
@@ -80,39 +88,10 @@ export default function RecentTransactionsScreen() {
               Recent Transactions
             </Text>
           </View>
-          {isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            data.map((d, i) => {
-              return (
-                <View key={`{${i}-${d.date}}`}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      flexWrap: "wrap",
-                      justifyContent: "space-around",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text>{d.date}</Text>
-                    <Text>{d.description}</Text>
-                    <Text>{d.amount}</Text>
-                    <Text>{d.type}</Text>
-                    <Link
-                      href={{
-                        pathname: "/detail",
-                        params: { id: d.id },
-                      }}
-                      asChild
-                    >
-                      <Button title="More" />
-                    </Link>
-                  </View>
-                  <Divider width={2} color={theme?.colors?.divider} />
-                </View>
-              );
-            })
-          )}
+          <RecentTransactionsList
+            isLoading={isLoading}
+            recentTransactions={recentTransactions}
+          />
         </View>
       </Animated.ScrollView>
     </View>
