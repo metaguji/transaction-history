@@ -1,3 +1,8 @@
 import { createContext } from "react";
 
-export const AuthContext = createContext({} as any);
+interface AuthContextType {
+  isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const AuthContext = createContext({} as AuthContextType);
