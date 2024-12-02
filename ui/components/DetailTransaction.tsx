@@ -4,17 +4,19 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 export function DetailTransaction({
   id,
   isLoading,
+  isError,
   detailTransactionItem,
 }: {
   id: string;
   isLoading: boolean;
+  isError: boolean;
   detailTransactionItem: DetailTransactionItem | undefined;
 }) {
   if (isLoading) {
     return <ActivityIndicator />;
   }
 
-  if (!detailTransactionItem) {
+  if (isError || !detailTransactionItem) {
     return (
       <View>
         <Text>Unable to process request.</Text>

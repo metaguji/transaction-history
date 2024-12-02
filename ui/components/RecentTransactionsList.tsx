@@ -5,9 +5,11 @@ import { ActivityIndicator, Button, Text, View } from "react-native";
 
 export function RecentTransactionsList({
   isLoading,
+  isError,
   recentTransactions,
 }: {
   isLoading: boolean;
+  isError: boolean;
   recentTransactions: RecentTransactionItem[];
 }) {
   const { theme } = useTheme();
@@ -20,7 +22,7 @@ export function RecentTransactionsList({
     );
   }
 
-  if (!recentTransactions.length) {
+  if (isError || !recentTransactions.length) {
     return (
       <View
         style={{

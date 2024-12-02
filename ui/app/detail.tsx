@@ -20,8 +20,9 @@ export default function DetailTransactionScreen() {
   const [detailTransactionItem, setDetailTransactionItem] = useState<
     DetailTransactionItem | undefined
   >(undefined);
-  const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { id } = useLocalSearchParams();
 
   const getDetailTransactionData = async () => {
@@ -32,6 +33,7 @@ export default function DetailTransactionScreen() {
       const jsonData = await response.json();
       setDetailTransactionItem(jsonData);
     } catch (error) {
+      setIsError(true);
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -80,6 +82,7 @@ export default function DetailTransactionScreen() {
         <DetailTransaction
           id={Array.isArray(id) ? id[0] : id}
           isLoading={isLoading}
+          isError={isError}
           detailTransactionItem={detailTransactionItem}
         />
       </View>

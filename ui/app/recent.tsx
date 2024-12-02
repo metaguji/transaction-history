@@ -27,6 +27,7 @@ export default function RecentTransactionsScreen() {
     RecentTransactionItem[]
   >([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   const getRecentTransactionData = async () => {
@@ -37,6 +38,7 @@ export default function RecentTransactionsScreen() {
       const jsonData = await response.json();
       setRecentTransactions(jsonData);
     } catch (error) {
+      setIsError(true);
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -90,6 +92,7 @@ export default function RecentTransactionsScreen() {
           </View>
           <RecentTransactionsList
             isLoading={isLoading}
+            isError={isError}
             recentTransactions={recentTransactions}
           />
         </View>
