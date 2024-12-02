@@ -39,7 +39,6 @@ export default function RecentTransactionsScreen() {
       setRecentTransactions(jsonData);
     } catch (error) {
       setIsError(true);
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

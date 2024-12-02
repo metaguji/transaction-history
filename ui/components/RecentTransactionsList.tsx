@@ -22,6 +22,22 @@ export function RecentTransactionsList({
     );
   }
 
+  if (isError) {
+    return (
+      <View
+        style={{
+          padding: 50,
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <Text>Unable to process request.</Text>
+      </View>
+    );
+  }
+
   if (isError || !recentTransactions.length) {
     return (
       <View

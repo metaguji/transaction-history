@@ -34,7 +34,6 @@ export default function DetailTransactionScreen() {
       setDetailTransactionItem(jsonData);
     } catch (error) {
       setIsError(true);
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
